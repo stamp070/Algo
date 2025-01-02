@@ -29,24 +29,7 @@ string reduce(string s)
 }
 string mostFrequent(vector<int> a)
 {
-    unordered_map<int, int> freq;
-    for (int num : a)
-    {
-        freq[num]++;
-    }
-
-    int max_count = 0;
-    int most_frequent = a[0];
-    for (auto &pair : freq)
-    {
-        if (pair.second > max_count)
-        {
-            max_count = pair.second;
-            most_frequent = pair.first;
-        }
-    }
-
-    return to_string(most_frequent);
+    
 }
 int main()
 {

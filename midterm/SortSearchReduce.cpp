@@ -27,10 +27,51 @@ string reduce(string s)
     }
     return st;
 }
-string mostFrequent(vector<int> a)
+int findMax(string a)
 {
-    
+    int Maxnum = 1, num = 1;
+    for (int i = 1; i < a.size(); i++)
+    {
+        if (a[i] == a[i - 1])
+        {
+            num++;
+        }
+        else
+        {
+            num = 1;
+        }
+        if (num > Maxnum)
+        {
+            Maxnum = num;
+        }
+    }
+    return Maxnum;
 }
+vector<char> mostFrequent(string a)
+{
+    vector<char> s;
+    int Maxnum = 1, num = 1;
+    Maxnum = findMax(a);
+    for (int i = 1; i < a.size(); i++)
+    {
+        if (a[i] == a[i - 1])
+        {
+            num++;
+        }
+        else
+        {
+            num = 1;
+        }
+        if (num == Maxnum)
+        {
+            s.push_back(a[i]);
+        }
+    }
+    sort(s.begin(), s.end());
+
+    return s;
+}
+
 int main()
 {
     int n;
@@ -40,9 +81,16 @@ int main()
     {
         cin >> A[i];
     }
+    sort(A.begin(), A.end());
     string ans = ToString(A);
     cout << ans << endl;
+    vector<char> s = mostFrequent(ans);
+    for (auto i : s)
+    {
+        cout << i << " ";
+    }
+    cout << endl;
     cout << reduce(ans) << endl;
-    cout << mostFrequent(A) << endl;
+
     return 0;
 }

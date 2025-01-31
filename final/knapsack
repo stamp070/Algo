@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+int max_ans = 0,max_weight=0,ar[1000]={0};
+void print_sol(int v[],int w[],int x[], int n,int max) {
+	int sum=0,sum_w=0;
+	
+    for (int i = 1; i <= n; i++) {
+        sum += x[i]*v[i-1];
+        sum_w += x[i]*w[i-1];
+    }
+    
+    if(sum_w<=max && sum>=max_ans)
+	{	
+		max_ans = sum;
+		max_weight = sum_w;
+		for(int i=1;i<=n;i++){
+			if(x[i])
+				ar[i] =1;
+				
+		}
+		
+	}
+		
+	
+}
+
+void subset1(int v[],int w[],int x[], int l, int r,int max) {
+    if (l == r) {
+        print_sol(v,w,x, r,max);
+    } else {
+        x[l + 1] = 1;
+        subset1(v,w,x, l + 1, r,max);
+        x[l + 1] = 0;
+        subset1(v,w,x, l + 1, r,max);
+    }
+}
+
+int main() {
+    int n,max_v;
+	cin >> n >> max_v;            // Number of elements
+    int x[n + 1];        // Array to store subset
+    int value[n] = {0};
+    int weight[n] = {0};
+    
+    for(int i=0;i<n;i++){
+    	cin >> value[i];
+	}for(int i=0;i<n;i++){
+    	cin >> weight[i];
+	}
+    
+    subset1(value,weight,x, 0, n,max_v);
+	cout << "max " << max_ans << " weight " << max_weight << endl;
+	for(int i=1;i<=n;i++)
+		if(ar[i])	
+			cout << value[i-1]<< " ";
+    return 0;
+}
+
+/*
+4 18
+8 7 4 2
+12 5 4 2
+*/

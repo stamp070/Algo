@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+void print_sol(int a[],int x[], int n,int target) {
+	int sum=0;
+	
+    for (int i = 1; i <= n; i++) {
+    	sum+=a[x[i]-1];
+    }
+    if(sum ==target){
+    	for(int i=1;i<=n;i++){
+    		if(x[i])
+    		cout << a[x[i]-1] << " ";
+		}
+		cout << endl;
+	}
+}
+
+void subset2(int a[],int x[], int l, int n,int target) {
+
+    print_sol(a,x, l,target);
+
+       int j;
+    if (l == 0) 
+	j = 1; 
+    else 
+        j = x[l] + 1;
+	
+	
+    for (int i = j; i <= n; i++) {
+        x[l + 1] = i;
+        subset2(a,x, l + 1, n,target);
+        
+    }
+}
+
+int main() {
+    int n,k;    
+	cin >> n >> k;        // Number of elements
+    int x[n + 1];          // Array to store subset
+    int ar[n];
+    for(int i=0;i<n;i++)
+    	cin >> ar[i];
+   
+   	subset2(ar,x, 0, n,k);
+
+    return 0;
+}
+/*
+5 12
+25 10 9 2 1
+*/

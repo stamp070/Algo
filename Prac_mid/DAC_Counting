@@ -1,0 +1,51 @@
+#include <iostream>
+#include <utility>
+#include <algorithm>
+using namespace std;
+pair<int, int> finding(int a[], int l, int r, int target)
+{
+    if (l > r)
+    {
+        return {-1, -1};
+    }
+    int mid = (l + r) / 2;
+
+    if (target == a[mid])
+    {
+        int left = mid, right = mid;
+        while (left > l && target == a[left - 1])
+            left--;
+        while (right < r && target == a[right + 1])
+            right++;
+        return {left, right};
+    }
+    else if (target < a[mid])
+    {
+        finding(a, l, mid - 1, target);
+    }
+    else
+    {
+        finding(a, mid + 1, r, target);
+    }
+}
+int main()
+{
+    int n, target;
+    cin >> n >> target;
+    int arry[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arry[i];
+    }
+    sort(arry, arry + n);
+    auto ans = finding(arry, 0, n - 1, target);
+    cout << ans.second - ans.first + 1;
+    return 0;
+}
+/*
+10 5
+2 5 5 5 6 6 8 9 9 9
+
+9 2
+3 5 2 4 2 2 4 5 2
+ */

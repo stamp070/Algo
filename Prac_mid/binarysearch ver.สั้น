@@ -1,0 +1,12 @@
+#include <bits/stdc++.h>
+using namespace std;
+int bi(int arr[] , int l , int r , int k){
+    if(l>r) return -1;
+    int mid = (l+r)/2;
+    if(arr[mid] == k) return mid;
+    if(arr[mid] < k) return bi(arr , mid + 1 , r , k);
+    return bi(arr, l, mid - 1, k);
+}
+int main(){
+    return 0;
+}

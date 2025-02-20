@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+int greedy_train(vector<pair<double, double>> a, int n)
+{
+    int max_train = 0, train = 0;
+    sort(a.begin(), a.end());
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << a[i].first << " " << a[i].second << endl;
+    // }
+    for (int i = 0; i < n; i++)
+    {
+        train += a[i].second;
+        if (max_train < train)
+        {
+            max_train = train;
+        }
+    }
+    return max_train;
+}
+int main()
+{
+    int n;
+    cin >> n;
+    //        start&end, เข้า/ออก (เข้า = 1, ออก = 0)
+    vector<pair<double, double>> a(n * 2);
+    for (int i = 0; i < n * 2; i++)
+    {
+        if (i % 2 == 0)
+        {
+
+            cin >> a[i].first;
+            a[i].second = 1;
+        }
+        else
+        {
+            cin >> a[i].first;
+            a[i].second = -1;
+        }
+    }
+
+    cout << greedy_train(a, n * 2) << endl;
+    return 0;
+}
+/*
+6
+2.00 2.30
+2.10 3.40
+3.00 3.20
+3.20 4.30
+3.50 4.00
+5.00 5.20
+ */

@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+using namespace std;
+double Ratio[1000] = {0.00};
+double max_v = 0;
+double frac_knap(vector<pair<pair<double, int>, pair<double, double>>> a, int n, int max_w)
+{
+    float temp[1000];
+    for (int i = 0; i < n; i++)
+    {
+        a[i].first.second = i;
+        a[i].first.first = a[i].second.second / a[i].second.first;
+    }
+    sort(a.begin(), a.end(), greater<>());
+    int sum_w = 0, idx = 0;
+    for (int i = 0; i < n; i++)
+        cout << a[i].second.first << " ";
+    cout << endl;
+    for (int i = 0; i < n; i++)
+    {
+        sum_w += a[i].second.first;
+        max_v += a[i].second.second;
+        Ratio[a[i].first.second] = 1.00;
+        if (sum_w > max_w)
+        {
+            sum_w -= a[i].second.first;
+            max_v -= a[i].second.second;
+            Ratio[a[i].first.second] = 0.00;
+            continue;
+            ;
+        }
+        idx++;
+    }
+    int weight_left = max_w - sum_w;
+    cout << "index = " << idx << endl;
+    cout << "weight_left = " << weight_left << endl;
+    cout << "value " << max_v << endl;
+    if (weight_left != 0)
+    {
+        Ratio[a[idx].first.second] = weight_left / a[idx].second.first;
+        max_v += a[idx].second.second * Ratio[a[idx].first.second];
+    }
+}
+
+int main()
+{
+    int n, w;
+    cin >> n >> w;
+    //               ratio,index         weight,value
+    vector<pair<pair<double, int>, pair<double, double>>> a(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i].second.first;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i].second.second;
+    }
+    frac_knap(a, n, w);
+    for (int i = 0; i < n; i++)
+    {
+        cout << Ratio[i] << " ";
+    }
+    cout << endl
+         << max_v;
+
+    return 0;
+}

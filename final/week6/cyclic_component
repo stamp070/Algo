@@ -1,0 +1,85 @@
+#include <bits/stdc++.h>
+using namespace std;
+int cyclic(vector<int> g[], vector<bool> &visited, int src)
+{
+    queue<int> q;
+    q.push(src);
+    bool notcyclic = false;
+    while (!q.empty())
+    {
+        int a = q.front();
+        visited[a] = true;
+        q.pop();
+        int edges = 0;
+        for (int i : g[a])
+        {
+            edges++;
+            if (!visited[i])
+            {
+                q.push(i);
+            }
+        }
+        if (edges != 2)
+        {
+            notcyclic = true;
+        }
+    }
+    if (notcyclic)
+        return 0;
+    else
+        return 1;
+}
+
+int loop(vector<int> g[], vector<int> src)
+{
+    vector<bool> visited(10000, false);
+    int count = 0;
+    for (int i : src)
+    {
+        if (visited[i])
+            continue;
+        if (cyclic(g, visited, i))
+        {
+            count++;
+        }
+    }
+    return count;
+}
+int main()
+{
+    int v, e;
+    cin >> v >> e;
+    vector<int> g[10000];
+    vector<int> src;
+    for (int i = 0; i < e; i++)
+    {
+        int s, d;
+        cin >> s >> d;
+        g[s].push_back(d);
+        g[d].push_back(s);
+        if (find(src.begin(), src.end(), s) == src.end())
+            src.push_back(s);
+        if (find(src.begin(), src.end(), d) == src.end())
+            src.push_back(d);
+    }
+    cout << loop(g, src);
+    return 0;
+}
+/*
+15 14
+1 10
+1 5
+5 10
+2 9
+9 15
+2 15
+2 12
+12 15
+13 8
+6 14
+14 3
+3 7
+7 11
+11 6
+*/
+//output: 2

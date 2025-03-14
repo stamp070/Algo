@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> memo(10000, -1);
+int safetywalk(vector<bool> &danger, int n, int m)
+{
+    if (n == 0)
+        return 1;
+
+    if (n < 0 || danger[n])
+    {
+        return 0;
+    }
+
+    if (memo[n] != -1)
+        return memo[n];
+
+    int step = 0;
+    for (int i = 1; i <= m; i++)
+    {
+        step += safetywalk(danger, n - i, m);
+    }
+    memo[n] = step;
+    return memo[n];
+}
+int main()
+{
+    int n, m;
+    cin >> n >> m;
+    int k;
+    cin >> k;
+    vector<bool> danger(k + 1, false);
+    for (int i = 0; i < k; i++)
+    {
+        int a;
+        cin >> a;
+        danger[a] = true;
+    }
+    cout << safetywalk(danger, n, m);
+    return 0;
+}

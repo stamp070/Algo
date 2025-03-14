@@ -1,0 +1,70 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> memo(10000, -1);
+int pick(vector<int> ar, int n)
+{
+    if (n < 0)
+        return 0;
+    if (n == 0)
+    {
+        memo[n] = ar[0];
+        return ar[n];
+    }
+
+    if (memo[n] != -1)
+        return memo[n];
+
+    memo[n] = max(pick(ar, n - 1), pick(ar, n - 2) + ar[n]);
+    return memo[n];
+}
+int Max = 0;
+int cal(vector<int> ar, vector<int> &temp, int n)
+{
+    int sum = 0, check = 1;
+    for (int i = 2; i <= n; i++)
+    {
+
+        if (temp[i] == 1 && temp[i - 1] == 1)
+        {
+            check = 0;
+        }
+    }
+
+    if (check)
+    {
+        for (int i = 0; i < n; i++)
+            sum += ar[i - 1] * temp[i];
+    }
+    if (sum > Max)
+    {
+        Max = sum;
+    }
+}
+int subset(vector<int> ar, vector<int> &temp, int l, int r)
+{
+    if (l == r)
+    {
+        cal(ar, temp, r);
+    }
+    else
+    {
+        temp[l + 1] = 1;
+        subset(ar, temp, l + 1, r);
+        temp[l + 1] = 0;
+        subset(ar, temp, l + 1, r);
+    }
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> ar(n + 1);
+    vector<int> temp(n + 1);
+    for (int i = 0; i < n; i++)
+        cin >> ar[i];
+    cout << pick(ar, n) << endl;
+    subset(ar, temp, 0, n);
+    cout << Max;
+    return 0;
+}

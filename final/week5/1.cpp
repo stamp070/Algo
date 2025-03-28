@@ -15,6 +15,7 @@ int prim(vector<pair<int, int>> g[], int src, int n)
     while (!pq.empty())
     {
         int temp = pq.top().second;
+        visited[temp] = true;
 
         pq.pop();
         for (auto i : g[temp])
@@ -23,16 +24,17 @@ int prim(vector<pair<int, int>> g[], int src, int n)
             int weight = i.second;
             if (!visited[v] && weight < dist[v])
             {
-                cout << "node: " << v << " weight: " << weight << endl;
-                visited[v] = true;
+                // cout << "node: " << v << " weight: " << weight << endl;
                 dist[v] = weight;
                 pq.push({dist[v], v});
                 sum += dist[v];
             }
         }
     }
+
     return sum;
 }
+
 int main()
 {
     int v, e;
@@ -44,7 +46,7 @@ int main()
         int a, b, c;
         cin >> a >> b >> c;
         g[a].push_back({b, c});
-        g[b].push_back({a, c});
+        // g[b].push_back({a, c});
     }
     int dest;
     cin >> dest;
